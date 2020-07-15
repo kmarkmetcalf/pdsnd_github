@@ -28,7 +28,7 @@ def get_filters():
             print("Try again (check for exact spelling)")
         except:
             print("Try again")
-           
+
 
     # TO DO: get user input for month (all, january, february, ... , june)
     while True:
@@ -39,11 +39,11 @@ def get_filters():
            print("\nTry again (check for exact spelling and note that there is no data after June)")
        except:
            print("Try again")
-            
+
     # TO DO: get user input for day of week (all, monday, tuesday, ... sunday)
     while True:
        try:
-           day = str(input('What day of the week (type "All" for all days of the week or "Monday", "Tuesday", "Wednesday", etc...)?  ').title())          
+           day = str(input('What day of the week (type "All" for all days of the week or "Monday", "Tuesday", "Wednesday", etc...)?  ').title())
            if day in days:
                break
            print("\nTry again (check for exact spelling)")
@@ -65,7 +65,7 @@ def load_data(city, month, day):
     Returns:
         df - Pandas DataFrame containing city data filtered by month and day
     """
-    
+
     #if statement to call correct file based on user input
     if city == "Washington":
         filename = 'washington.csv'
@@ -73,35 +73,35 @@ def load_data(city, month, day):
         filename = 'new_york_city.csv'
     elif city == "Chicago":
         filename = 'chicago.csv'
-    
+
     df = pd.read_csv(filename)
-    
+
     #try statements in case 'Gender' column is missing in the files. The column is created with NaN values
     try:
-        df[['Gender']] = df[['Gender']].fillna(value='Unknown')       
+        df[['Gender']] = df[['Gender']].fillna(value='Unknown')
     except:
-        df["Gender"] = np.nan       
-            
-    #creation of new time columns based on dates        
+        df["Gender"] = np.nan
+
+    #creation of new time columns based on dates
     df['Start Time'] = pd.to_datetime(df['Start Time'])
     df['week_day'] = df['Start Time'].dt.day_name()
     df['month'] = df['Start Time'].dt.month_name()
     df['hour'] = df['Start Time'].dt.hour
-    
+
     #creation of station to station trips
     df['combo_station'] = df['Start Station'] + ' -> TO -> ' + df['End Station']
-    
+
     #fills NaNs with 'Unknown' value
     df[['Gender']] = df[['Gender']].fillna(value='Unknown')
     df[['User Type']] = df[['User Type']].fillna(value='Unknown')
-           
-    #if 'All' is inputted by the user, then the following statement avoids filters    
+
+    #if 'All' is inputted by the user, then the following statement avoids filters
     if month != 'All':
         df = df[df['month'] == month]
-    
+
     if day != 'All':
-        df = df[df['week_day'] == day]   
-    
+        df = df[df['week_day'] == day]
+
     return df
 
 
@@ -116,7 +116,7 @@ def time_stats(df):
         print("The most common month is:", df['month'].mode()[0])
     else:
         print("Most common month not shown since month filter is applied")
-        
+
 
     # TO DO: display the most common day of week
     if df['week_day'].nunique() > 1:
@@ -146,7 +146,7 @@ def station_stats(df):
 
     # TO DO: display most frequent combination of start station and end station trip
     print("The most common combination of start station and end station trip is:\n", df['combo_station'].mode()[0])
-    
+
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
@@ -159,12 +159,12 @@ def trip_duration_stats(df):
 
     # TO DO: display total travel time
     total_duration = df['Trip Duration'].sum()
-    
+
     print("The total travel time:", time.strftime('%H:%M:%S', time.gmtime(total_duration)),'(H:M:S)')
 
     # TO DO: display mean travel time
     avg_time = df['Trip Duration'].mean()
-    
+
     print("The average travel time:", time.strftime('%H:%M:%S', time.gmtime(avg_time)),'(H:M:S)')
 
     print("\nThis took %s seconds." % (time.time() - start_time))
@@ -179,20 +179,20 @@ def user_stats(df):
 
     # TO DO: Display counts of user types
     print("The count of each user type:\n", df['User Type'].value_counts())
-    
-    
+
+
     # TO DO: Display counts of gender
     print("\nThe count of each gender:\n", df['Gender'].value_counts())
-    
-    
+
+
 
     # TO DO: Display earliest, most recent, and most common year of birth
     #try statement added because a file may not have the birth year included in the data
-    try:       
+    try:
         print("\nThe earliest birth year:", int(df['Birth Year'].min()))
         print("The most recent birth year:", int(df['Birth Year'].max()))
         print("The most common birth year:", int(df['Birth Year'].mode()))
-        
+
     except:
         print("\nNote: no birth year data is available")
 
@@ -209,19 +209,19 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df)
-
+    #counter is utilized to ensure when users want to see more data, its five rows at a time
         i = 0
         j = 5
         while True:
             raw_dat = input('\nWould you like to see 5 new or additional lines of raw data? Enter yes or no.\n')
             if raw_dat.lower() != 'yes':
                break
-            elif raw_dat.lower() == 'yes':   
+            elif raw_dat.lower() == 'yes':
                 print('\nNote: values of column 1 are the orginal row numbers from the file before filtering\n')
                 print(df.iloc[i:j])
                 i += 5
                 j += 5
-        
+
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
             break
