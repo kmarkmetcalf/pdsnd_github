@@ -1,15 +1,23 @@
 ### Date created
-Include the date you created this project and README file.
+14 July 2020
 
 ### Project Title
-Replace the Project Title
+Udacity Project for Version Control
 
 ### Description
-Describe what your project is about and what it does
+This tests my knowledge of version control and how to utilize both git and [GitHub](http://github.com).
 
 ### Files used
-Include the files used
+The files used:
+    bikeshare.py is a file with Python code which allows users to enter parameters to drill down into three cities bike share data
+
+    .gitignore is utilized to ignore the large csv files which would constrain system resources
+
+    washington.csv (ignored) is the bike share data from Washington
+
+    new_york_city.csv (ignored) is the bike share data from New York City
+
+    chicago.csv (ignored) is the bike share data from Chicago
 
 ### Credits
-It's important to give proper credit. Add links to any repo that inspired you or blogposts you consulted.
-
+This project came from Udacity and was combined with the bike share data that Mark Metcalf used in an earlier lesson.
