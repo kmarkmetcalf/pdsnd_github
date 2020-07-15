@@ -5,7 +5,9 @@
 Udacity Project for Version Control
 
 ### Description
-This tests my knowledge of version control and how to utilize both git and [GitHub](http://github.com).
+Users can view and select filtered data for bike share information within three major US cities
+
+This also tests my knowledge of version control and how to utilize both git and [GitHub](http://github.com).
 
 ### Files used
 The files used:
