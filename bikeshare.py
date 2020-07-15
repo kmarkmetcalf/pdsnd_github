@@ -210,7 +210,7 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df)
-
+    #counter is utilized to ensure when users want to see more data, its five rows at a time
         i = 0
         j = 5
         while True:
